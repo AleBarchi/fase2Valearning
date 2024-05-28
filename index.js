@@ -1,18 +1,3 @@
-window.addEventListener("load", function () {
-	document.getElementsByClassName("openES")[0].addEventListener("click", function () {
-		creaEsVF(esercizioVF); // non mi sono venuti in mente altri modi per passare paramentri con l'addeventlistener
-	});
-	document.getElementsByClassName("openES")[1].addEventListener("click", function () {
-		creaEsRM(esercizioRM);
-	});
-	document.getElementsByClassName("openES")[2].addEventListener("click", function () {
-		creaEsTB(esercizioTB);
-	});
-	document.getElementsByClassName("footer_anchor")[0].addEventListener("click", showModal);
-
-	document.getElementsByClassName("");
-});
-
 function creaEsVF(esercizio) {
 	let aus = ` <div class="card esVF">
                     <div class="card-header">
