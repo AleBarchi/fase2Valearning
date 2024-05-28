@@ -1,0 +1,121 @@
+/*Definizione delle variabili css relative ai colori*/
+:root{
+    --bluScuro: #000080;
+    --azzurro1: #4c80cb;
+    --azzurro2:  #506aff;
+    --azzurroBKG: #b5cdfa;
+    --rosso: #cf2d47;
+}
+
+
+body{
+    /*
+        Richiamare una variabile
+        background-color: var(--rosso);
+    */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    margin: 0px;
+    background-color: var(--azzurroBKG);
+}
+
+.navbar-brand{
+    width: 100px;
+    height: 100px;
+    background-image: url("img/logo.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+main{
+	position:relative;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    overflow-y:auto;
+	top:200px;
+}
+
+#accedi{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+header{
+    width: 100%;
+    background-color: var(--azzurroBKG);
+}
+
+nav > *, nav{
+    background-color: var(--azzurroBKG);
+    padding: 0;
+    margin: 0;
+}
+
+nav{
+    height: 12vh;
+    padding: 0px;
+}
+
+header img{
+    width: 7vw;
+    height: auto;
+}
+
+.card-header{
+    width: 100%;
+    position: relative;
+}
+
+.esVF .card-text{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.esRM .card-text div{
+    margin-bottom: 2vh;
+}
+
+.esTB .card-text{
+    display: flex;
+    flex-direction: row;
+}
+
+.esRM, .esTB, .esVF{
+    width: 60vw;
+}
+
+.openES{
+    max-width: 60vw;
+}
+
+.expandMore{
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 35px;
+}
+
+
+.radioVero{accent-color: green;}
+.radioFalso{accent-color: red;}
+
+.footer_anchor{color: var(--rosso);}
+
+@media (max-width: 769px){
+    .esRM, .esTB, .esVF{
+        width: 90vw;
+    }
+
+    .openES{
+        max-width: 90vw;
+    }
+}
