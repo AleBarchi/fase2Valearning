@@ -1,22 +1,40 @@
-window.onload = function() {
-    fetch('index.php')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Data received:', data);
-            //uso il vettore json
-            
-            creaCompComuni(data);
-           
+/**
+ * Ale decidiamo come fare con le risposte, io pensavo che tipo qua nel JS prendi dall'oggetto JSON tutte le risposte 
+ * corrette e ti crei un vettore locale con queste, poi così facciamo per la correzzione una comparazione tra un nuovo vettore 
+ * fatto dalle risposte date dall'utente e le risposte giuste, quindi tu mi mandi al php nuovo solo più 2 vettori
+ * poi io nel php li controllo e assegno i punteggi all'utente
+ * 
+ * ho scritto tutto questo solo perchè poi me lo dimentico
+ */
 
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
+
+window.onload = function() {
+    // ci deve arrivare in qualche modo l'id dell'esercizio da visualizzare
+    let id = 1 // ovviamente da modificare
+
+    // con questa roba aggiunta sotto fetch passo semplicemente i parametri in post al mio file php
+    fetch('getDatiEs.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `id=${encodeURIComponent(id)}`
+    }) 
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Data received:', data);
+        //uso il vettore json
+        
+        creaCompComuni(data);
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
 
 };
 
@@ -165,6 +183,30 @@ function showModal() {
 	}
 }
 
-function announceCorrezione() {
-	alert("PAGINA DI CORREZIONE");
+function correggiES(idUtente) {
+    // Definizione dei vettori di stringhe
+    let risposteDate = ["risposta1", "risposta2", "risposta3"]; // Esempio di risposte date
+    let risposteCorrette = ["corretta1", "corretta2", "corretta3"]; // Esempio di risposte corrette
+    
+    let formData = new FormData(); // serve per inviare i parametri al php
+    formData.append('idUtente', idUtente);
+    formData.append('risposteDate', JSON.stringify(risposteDate));
+    formData.append('risposteCorrette', JSON.stringify(risposteCorrette));
+    
+    let options = {
+        method: 'POST',
+        body: formData
+    };
+    
+    fetch('chkEs.php', options)
+        .then(function(response) {
+            // qua mettiamo tipo una scritta in centro con "Hey hai totalizzato x punti su 10 in questo esercizio"
+            alert(response.punti);
+        })
+        .then(function(data) {
+            console.log('Risposta dal server:', data);
+        })
+        .catch(function(error) {
+            console.error('Si è verificato un errore:', error);
+        });
 }
