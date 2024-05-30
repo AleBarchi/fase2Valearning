@@ -29,8 +29,9 @@ class Footer extends HTMLElement { // classe per il componente custom
 
                 position: absolute;
                 top: 100%;
+                right: 0;
                 
-                padding-bottom:20px;
+
             }
 
             footer h3 { font-size: 15pt; }

@@ -12,7 +12,7 @@ let risposteCorrette = [];
 let esercizio = {};
 
 
-window.onload = function() {
+window.onload = function () {
     // ci deve arrivare in qualche modo l'id dell'esercizio da visualizzare
     let id = 1 // ovviamente da modificare
 
@@ -27,7 +27,7 @@ window.onload = function() {
     // .then(data => {
     //     console.log('Data received:', data);
     //     //uso il vettore json
-        
+
     creaCompComuni();
     // })
     // .catch(error => {
@@ -47,45 +47,48 @@ function creaCompComuni() {
         "idValidatore": 2,
         "note": "Questo è un esempio di nota.",
         "domande": [
-          {
-            "domID": 1,
-            "testo": "ciao sono ",
-            "livelloID": 2,
-            "utenteID": 1,
-            "dataInvio": "2024-05-29",
-            "esID": 1,
-            "elencoRisposte": ["hello i am", "hello"],
-            "rispostaCorretta": "Falso"
-          },
-          {
-            "domID": 2,
-            "testo": "jonny e etero",
-            "livelloID": 3,
-            "utenteID": 2,
-            "dataInvio": "2024-05-30",
-            "esID": 1,
-            "elencoRisposte": ["jonny non e fro", "non"],
-            "rispostaCorretta" : "Vero"
-          }
+            {
+                "domID": 1,
+                "testo": "ciao sono ",
+                "livelloID": 2,
+                "utenteID": 1,
+                "dataInvio": "2024-05-29",
+                "esID": 1,
+                "elencoRisposte": ["hello i am", "hello"],
+                "rispostaCorretta": "Falso"
+            },
+            {
+                "domID": 2,
+                "testo": "jonny e etero",
+                "livelloID": 3,
+                "utenteID": 2,
+                "dataInvio": "2024-05-30",
+                "esID": 1,
+                "elencoRisposte": ["jonny non e fro", "non"],
+                "rispostaCorretta": "Vero"
+            }
         ]
-      }
-      
-    let aus;  
+    }
+
+    let aus;
 
     aus = `
-                <span>${esercizio.titolo}</span><br>
-                <span>livello esercizio: ${esercizio.livello}</span>`;
+            <div class="titolo">
+                <h2 id="title1">${esercizio.titolo}</h2><br>
+                <span id="title2">livello esercizio: <strong>${esercizio.livello}</strong></span><br>
+            </div>`;
+
 
     aus += creaEs(esercizio);
 
-    aus +=`<button class="btn btn-primary" onclick="correggiES()">Correggi</button>`;
+    aus += `<button class="btn btn-primary" onclick="correggiES()">Correggi</button>`;
 
     document.getElementById("contenitore").innerHTML = aus;
 
 }
 
 function creaEs(esercizio) {
-    switch(esercizio.tipo){
+    switch (esercizio.tipo) {
         case "veroFalso":
             return creaEsVF(esercizio.domande);
 
@@ -96,7 +99,7 @@ function creaEs(esercizio) {
             return creaEsTB(esercizio.domande);
 
         case "refrasing":
-            return creaEsRF(esercizio.domande);       
+            return creaEsRF(esercizio.domande);
     }
 }
 
@@ -131,14 +134,14 @@ function creaEsVF(domande) {
 
 function gestisciClick(i, valore) {
 
-    if(valore == 'V'){
+    if (valore == 'V') {
 
         risposteDate[i] = "Vero";
 
-    }else if(valore == 'F'){
+    } else if (valore == 'F') {
 
         risposteDate[i] = "Falso";
-    
+
     }
 
 }
@@ -152,7 +155,7 @@ function creaEsTB(domande) {
 
         risposteDate.push("");
 
-        let testo =  domande[i].testo.split(";");
+        let testo = domande[i].testo.split(";");
 
         aus += ` <div class="card esTB">
                         <div class="card-header">
@@ -169,7 +172,7 @@ function creaEsTB(domande) {
                     </div>
                 </div>
             </div>`;
-    
+
     }
 
     return aus;
@@ -236,7 +239,7 @@ function creaEsRF(domande) {
                     </div>
                 </div>
             </div>`;
-    
+
     }
 
     return aus;
@@ -246,7 +249,7 @@ function creaEsRF(domande) {
 
 
 function correggiES() {
-   // calcolo punteggio e aggiorno il JSON mettendo anche questo dentro
+    // calcolo punteggio e aggiorno il JSON mettendo anche questo dentro
     let domande = risposteCorrette.length;
     let contErr = 0;
     for (let i in domande)

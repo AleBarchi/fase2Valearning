@@ -123,4 +123,17 @@ header img{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 100px;
+}
+
+.titolo{
+    width: 100%;
+}
+
+#title1{
+    float: left;
+}
+
+#title2{
+    float: right;
 }
