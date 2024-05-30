@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+/*Definizione delle variabili css relative ai colori*/
+:root{
+  --bluScuro: #000080;
+  --azzurro1: #4c80cb;
+  --azzurro2:  #506aff;
+  --rosso: #cf2d47;
+  --primary-light: #8abdff;
+  --primary: #6d5dfc;
+  --primary-dark: #5b0eeb;
+  
+  --white: #FFFFFF;
+  --greyLight-1: #E4EBF5;
+  --greyLight-2: #c8d0e7;
+  --greyLight-3: #bec8e4;
+  --greyDark: #9baacf;
+  --success: #d4e8df;
+}
+
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  font-family: 'Rubik', sans-serif;
+
+}
+
+#titEx{
+  color: #000;
+}
+#poiEx{
+  box-shadow: 0.2rem 0.3rem 1rem var(--greyDark), -0.2rem -0.2rem 1rem var(--greyLight-1);
+  padding: 3px;
+  width: max-content;
+  border-radius: 5px;
+  border: 0;
+  background-color:var(--primary);
+  color: white;
+}
+#exArea{
+  width: max-content;
+  padding: 2%;
+  margin: 1%;
+  border-radius: 2%;
+  box-shadow: 0.3rem 0.2rem .6rem var(--greyDark), -0.2rem -0.2rem .8rem var(--greyLight-1);
+}
+#partefinale{
+  background-color:var(--primary);
+  width: 40%;
+
+  text-align:center;
+  border-radius: 5px;
+  color:white;
+  box-shadow: 0.8rem 0.8rem 1.4rem var(--greyDark), -0.2rem -0.2rem 1.8rem var(--greyLight-1);
+  border: 0;
+  margin: 10px;
+}
+#partefinale2{
+  background-color:var(--success);
+  width: 40%;
+  text-align:center;
+  border-radius: 5px;
+  color:rgb(0, 0, 0);
+  box-shadow: 0.8rem 0.8rem 1.4rem var(--greyDark), -0.2rem -0.2rem 1.8rem var(--greyLight-1);
+  border: 0;
+  margin: 10px;
+  transition: .3s;
+}
+#partefinale2:hover{
+  scale: 1.05;
+  cursor: pointer;
+}
+
+#usrArea, tr{
+  box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-2), -0.2rem -0.2rem 1.8rem var(--white);
+  
+}
+#usrArea {
+  animation: zoomIn; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1s; /* don't forget to set a duration! */
+}
+#corr, #von{
+  box-shadow: 0.3rem 0.2rem .6rem var(--greyDark), -0.2rem -0.2rem .8rem var(--greyLight-1);
+  width: 90%;
+  
+}
+#corr{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+body{
+  /*
+      Richiamare una variabile
+      background-color: var(--rosso);
+  */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  margin: 0px;
+  overflow-x: hidden;
+  overflow-y: visible;
+
+}
+
+.navbar-brand{
+  width: 100px;
+  height: 40px;
+  background-image: url("../ICONS/logo.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+main{
+  height: 180vh;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: var(--greyLight-1);
+}
+
+header{
+  width: 100%;
+}
+ul {
+  margin: 0px;
+  padding: 0px;
+}
+.ntt{
+  color:var(--primary); 
+  width: 100%;
+}
+.footer-section {
+background: #151414;
+position: relative;
+}
+.footer-cta {
+border-bottom: 1px solid #373636;
+}
+.single-cta i {
+color: var(--azzurro2);
+font-size: 30px;
+float: left;
+margin-top: 8px;
+}
+.cta-text {
+padding-left: 15px;
+display: inline-block;
+}
+.cta-text h4 {
+color: var(--azzurro2);
+font-size: 20px;
+font-weight: 600;
+margin-bottom: 2px;
+}
+.cta-text span {
+color: #757575;
+font-size: 15px;
+}
+.copyright-area{
+background: #f7f7f7;
+padding: 25px 0;
+}
+.copyright-text p {
+margin: 0;
+font-size: 14px;
+color: #878787;
+}
+.copyright-text p a{
+color: var(--azzurro2);
+}
+.footer-menu li {
+display: inline-block;
+margin-left: 20px;
+}
+.footer-menu li:hover a{
+color: var(--azzurro2);
+}
+.footer-menu li a {
+font-size: 14px;
+color: #878787;
+}
+
+.navigation a{
+  position: relative;
+  font-size: 1.1em;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 80px;
+  box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-1), -0.2rem -0.2rem 1.8rem var(--white);
+
+}
+.navigation .login-popup{
+  width: 130px;
+  height: 50px;
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-left: 40px;
+}
+.navigation .login-popup:hover{
+  background: var(--primary);
+  color: #332758;
+  transition: all .5;
+
+}
+.navigation a::after{
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 5px;
+  left: 0;
+  bottom: -5px;
+  transform: scaleX(0);
+  transition: transform .3s;
+}
+.navigation a:hover::after{
+  transform: scaleX(1);
+}
+.ifg{
+  box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-1), -0.2rem -0.2rem 1.8rem var(--white);
+  border-radius: 5px;
+  border: 0;
+  margin-bottom: 7px;
+}
+.btnDati{
+  box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-1), -0.2rem -0.2rem 1.8rem var(--white);
+  border-radius: 5px;
+  border: 0;
+  background-color:var(--primary);
+  width:20% ;
+  text-align:center;
+  border-radius: 5px;
+  color:white;
+  box-shadow: 0.8rem 0.8rem 1.4rem var(--greyDark), -0.2rem -0.2rem 1.8rem var(--greyLight-1);
+  display: block;
+  margin: 10px;
+  text-align: left;
+  padding-left: 4px;
+}
+.int{
+  background-color:var(--primary);
+  box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-1), -0.2rem -0.2rem 1.8rem var(--white);
+  color:white; 
+}
+
+#int{
+  background-color:var(--primary);
+  box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-1), -0.2rem -0.2rem 1.8rem var(--white);
+  color:white; 
+}
+
+.wrapper {
+  display: grid;
+  place-items: center;
+  width: 100%;
+} 
+@media screen and (max-width: 768px) {
+    .ntt{
+      content: "Correzione";
+    }
+}

@@ -8,6 +8,8 @@
  */
 
 let risposteDate = [];
+let risposteCorrette = [];
+let esercizio = {};
 
 
 window.onload = function() {
@@ -35,7 +37,7 @@ window.onload = function() {
 };
 
 function creaCompComuni() {
-    let esercizio = {
+    esercizio = {
         "codEs": 1,
         "titolo": "Zio pera questo è il titolo",
         "tipo": "refrasing",
@@ -76,17 +78,14 @@ function creaCompComuni() {
 
     aus += creaEs(esercizio);
 
-    aus +=`<button class="btn btn-primary" onclick="correggi(${esercizio})">Correggi</button>`;
+    aus +=`<button class="btn btn-primary" onclick="correggiES()">Correggi</button>`;
 
     document.getElementById("contenitore").innerHTML = aus;
 
 }
 
 function creaEs(esercizio) {
-
-
     switch(esercizio.tipo){
-
         case "veroFalso":
             return creaEsVF(esercizio.domande);
 
@@ -97,20 +96,14 @@ function creaEs(esercizio) {
             return creaEsTB(esercizio.domande);
 
         case "refrasing":
-            return creaEsRF(esercizio.domande);
-            
+            return creaEsRF(esercizio.domande);       
     }
-
 }
 
 
 function creaEsVF(domande) {
-
     let aus = ``;
-
-
     for (let i in domande) {
-
         risposteDate.push("Vero");
 
         aus += ` <div class="card esVF">
@@ -252,30 +245,17 @@ function creaEsRF(domande) {
 
 
 
-function correggiES(idUtente) {
-    // Definizione dei vettori di stringhe
-    let risposteDate = ["risposta1", "risposta2", "risposta3"]; // Esempio di risposte date
-    let risposteCorrette = ["corretta1", "corretta2", "corretta3"]; // Esempio di risposte corrette
-    
-    let formData = new FormData(); // serve per inviare i parametri al php
-    formData.append('idUtente', idUtente);
-    formData.append('risposteDate', JSON.stringify(risposteDate));
-    formData.append('risposteCorrette', JSON.stringify(risposteCorrette));
-    
-    let options = {
-        method: 'POST',
-        body: formData
-    };
-    
-    fetch('chkEs.php', options)
-        .then(function(response) {
-            // qua mettiamo tipo una scritta in centro con "Hey hai totalizzato x punti su 10 in questo esercizio"
-            alert(response.punti);
-        })
-        .then(function(data) {
-            console.log('Risposta dal server:', data);
-        })
-        .catch(function(error) {
-            console.error('Si è verificato un errore:', error);
-        });
+function correggiES() {
+   // calcolo punteggio e aggiorno il JSON mettendo anche questo dentro
+    let domande = risposteCorrette.length;
+    let contErr = 0;
+    for (let i in domande)
+        if (risposteDate[i] != risposteCorrette[i]) contErr++;
+
+    esercizio.punti = Math.round(10 * (domande - contErr) / domande);
+    esercizio.risposteCorrette = risposteCorrette;
+    esercizio.risposteDate = risposteDate;
+
+    sessionStorage.setItem("esercizio", JSON.stringify(esercizio));
+    window.location.href = "correzione.html";
 }

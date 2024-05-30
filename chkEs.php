@@ -1,43 +1,31 @@
 <?php
-$hostname = "localhost";
-$username = "isoardigiacomo";
-$password = ""; 
-$nomeDb = "isoardigiacomo";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "valearning_db";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$json = file_get_contents('php://input');
+$esercizio = json_decode($json, true);
+
+// Inizio della transazione
+$conn->begin_transaction();
 
 try {
-    // Creare la connessione utilizzando PDO, metodo più sicuro e funzionale
-    $conn = new PDO("mysql:host=$hostname;dbname=$nomeDb", $username, $password);
-    
-    $risposteDate = json_decode($_POST['risposteDate'], true);
-    $risposteCorrette = json_decode($_POST['risposteCorrette'], true);
-    $idUtente = $_POST['idUtente'];
-    
-    $domande = count($risposteCorrette);
-    $contErr = 0;
-    for ($i = 0; $i < $domande; $i++) {
-        if ($risposteDate[$i] != $risposteCorrette[$i]) $contErr++;
-    }
-    $punti = round(10 * ($domande - $contErr) / $domande);
-    
-    // Preparare e eseguire l'UPDATE
-    $stmt = $conn->prepare("UPDATE utenti SET punteggi = punteggi + :punti WHERE codUtente = :idUtente");
-    $stmt->bindParam(':punti', $punti, PDO::PARAM_INT);
-    $stmt->bindParam(':idUtente', $idUtente, PDO::PARAM_INT);
+    // Preparazione della query per inserire un nuovo esercizio
+    $stmt = $conn->prepare("INSERT INTO svolgimenti (idUtente, idEs, punteggio) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("iii", $esercizio['idUtente'], $esercizio['codEs'], $esercizio['punti']);
     $stmt->execute();
+    $conn->commit();
     
-    // Verificare se l'UPDATE è avvenuto con successo
-    if ($stmt->rowCount() > 0) {
-        echo "Record updated successfully";
-    } else {
-        echo "No record updated";
-    }
-} catch(PDOException $e) {
-    // Gestire eventuali eccezioni
+} catch (Exception $e) {
+    $conn->rollback();
     echo "Error: " . $e->getMessage();
 }
 
-// Chiudere la connessione
-$conn = null;
-
-$punteggio["punti"] = $punti;
-echo json_encode($punteggio);
+$conn->close();
