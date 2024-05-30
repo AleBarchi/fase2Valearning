@@ -7,49 +7,78 @@
  * ho scritto tutto questo solo perchè poi me lo dimentico
  */
 
+let risposteDate = [];
+
 
 window.onload = function() {
     // ci deve arrivare in qualche modo l'id dell'esercizio da visualizzare
     let id = 1 // ovviamente da modificare
 
     // con questa roba aggiunta sotto fetch passo semplicemente i parametri in post al mio file php
-    fetch('getDatiEs.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `id=${encodeURIComponent(id)}`
-    }) 
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Data received:', data);
-        //uso il vettore json
+    // fetch('getDatiEs.php', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded',
+    //     },
+    //     body: `id=${encodeURIComponent(id)}`
+    // }) 
+    // .then(data => {
+    //     console.log('Data received:', data);
+    //     //uso il vettore json
         
-        creaCompComuni(data);
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-    });
+    creaCompComuni();
+    // })
+    // .catch(error => {
+    //     console.error('There was a problem with the fetch operation:', error);
+    // });
 
 };
 
-function creaCompComuni(esercizio) {
+function creaCompComuni() {
+    let esercizio = {
+        "codEs": 1,
+        "titolo": "Zio pera questo è il titolo",
+        "tipo": "refrasing",
+        "livello": "B1",
+        "idUtente": 1,
+        "validato": 1,
+        "idValidatore": 2,
+        "note": "Questo è un esempio di nota.",
+        "domande": [
+          {
+            "domID": 1,
+            "testo": "ciao sono ",
+            "livelloID": 2,
+            "utenteID": 1,
+            "dataInvio": "2024-05-29",
+            "esID": 1,
+            "elencoRisposte": ["hello i am", "hello"],
+            "rispostaCorretta": "Falso"
+          },
+          {
+            "domID": 2,
+            "testo": "jonny e etero",
+            "livelloID": 3,
+            "utenteID": 2,
+            "dataInvio": "2024-05-30",
+            "esID": 1,
+            "elencoRisposte": ["jonny non e fro", "non"],
+            "rispostaCorretta" : "Vero"
+          }
+        ]
+      }
+      
+    let aus;  
 
-    let aus = `<div id="contenitore">
+    aus = `
                 <span>${esercizio.titolo}</span><br>
                 <span>livello esercizio: ${esercizio.livello}</span>`;
 
     aus += creaEs(esercizio);
 
-    aus +=`<button class="btn btn-primary" onclick="correggi(${esercizio})">Correggi</button>
-    </div>`;
+    aus +=`<button class="btn btn-primary" onclick="correggi(${esercizio})">Correggi</button>`;
 
-    document.getElementsByTagName("main").innerHTML = aus;
+    document.getElementById("contenitore").innerHTML = aus;
 
 }
 
@@ -66,6 +95,9 @@ function creaEs(esercizio) {
 
         case "testoBucato":
             return creaEsTB(esercizio.domande);
+
+        case "refrasing":
+            return creaEsRF(esercizio.domande);
             
     }
 
@@ -74,26 +106,27 @@ function creaEs(esercizio) {
 
 function creaEsVF(domande) {
 
-    let aus;
+    let aus = ``;
 
-    for (let i = 0; i < domande.length; i++) {
+
+    for (let i in domande) {
+
+        risposteDate.push("Vero");
 
         aus += ` <div class="card esVF">
                         <div class="card-header">
-                            <span>Esercizio n° ${domande[i].DomID}    </span>`;
+                            <span>domanda n° ${domande[i].domID}    </span>`;
 
-        aus += `    <span class="material-symbols-outlined expandMore">
-                        expand_more
-                    </span>
+        aus += `
                 </div>
                     <div class="card-body">
                         <div class="card-text">
                             <p>${domande[i].testo}</p> 
                             <div>
-                                <input type="radio" id="v" name="${domande[i].testo}">
-                                <label for="v">V</label>
-                                <input type="radio" id="f" name="${domande[i].testo}">
-                                <label for="f">F</label>
+                                <input type="radio" id="v${i}" name="${domande[i].domID}" value="V" checked onclick="gestisciClick(${i}, 'V')">
+                                <label for="v${i}">V</label>
+                                <input type="radio" id="f${i}" name="${domande[i].domID}" value="F" onclick="gestisciClick(${i}, 'F')">
+                                <label for="f${i}">F</label>
                             </div>
                         </div>
                     </div>
@@ -103,28 +136,42 @@ function creaEsVF(domande) {
     return aus;
 }
 
+function gestisciClick(i, valore) {
+
+    if(valore == 'V'){
+
+        risposteDate[i] = "Vero";
+
+    }else if(valore == 'F'){
+
+        risposteDate[i] = "Falso";
+    
+    }
+
+}
+
 function creaEsTB(domande) {
 
-    let aus;
+    let aus = ``;
 
 
-    for (let i = 0; i < domande.length; i++) {
+    for (let i in domande) {
+
+        risposteDate.push("");
 
         let testo =  domande[i].testo.split(";");
 
         aus += ` <div class="card esTB">
                         <div class="card-header">
-                            <span>Esercizio n° ${domande[i].DomID}    </span>`;
+                            <span>domanda n° ${domande[i].domID}    </span>`;
 
-        aus += `<span class="material-symbols-outlined expandMore">
-                    expand_more
-                </span>
+        aus += `
                 </div>
                     <div class="card-body">
                     <p>inserisci la parola mancante nel testo</p> 
                     <div class="card-text">
                         <p>${testo[0]}
-                        <input type="text">
+                        <input type="text" id="${domande[i].domID}">
                         ${testo[1]}</p>
                     </div>
                 </div>
@@ -137,51 +184,73 @@ function creaEsTB(domande) {
 }
 
 function creaEsRM(domande) {
-    let aus;
+    let aus = '';
 
-    for (let i = 0; i < domande.length; i++) {
+    for (let i in domande) {
 
-        let risp = domande[i].elencoRisposte.split(";");
+        risposteDate.push(domande[i].elencoRisposte[0]);
 
-        let rispostaCorretta = risp[0];
+        aus += `<div class="card esRM">
+                    <div class="card-header">
+                        <span>domanda n° ${domande[i].domID}</span>                  
+                    </div>
+                    <div class="card-body">
+                        <div class="card-text">
+                            <p>${domande[i].testo}</p>
+                            <div>
+                                <select name="${domande[i].domID}" id="combo${i}">
+        `;
 
-        //jack fai lo shuffle!!!!
-        //shuffle(risp);
-
-        aus += ` <div class="card esRM">
-                        <div class="card-header">
-                            <span>Esercizio n° ${domande[i].DomID}     </span>`;
-
-        aus += `<span class="material-symbols-outlined expandMore">
-                    expand_more
-                </span>
-                </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        <p>${domande[i].testo}</p> 
-                        <div>`;
-
-        for (let i in risp){
-            aus += `
-            <input type="radio" id="ris${i}" name="${domande[i].DomID}">
-            <label for="ris${i}">${risp[i]}</label><br>`;
+        for (let j in domande[i].elencoRisposte) {
+            let selected = j == 0 ? 'selected' : ''; // Seleziona automaticamente la prima opzione
+            aus += `<option value="${domande[i].elencoRisposte[j]}" ${selected}>${domande[i].elencoRisposte[j]}</option>`;
         }
-        aus += `        </div>
+
+        aus += `           </select>
+                        </div>
                     </div>
                 </div>
-                </div>`;
+            </div>`;
+    }
+
+    return aus;
+}
+
+
+function creaEsRF(domande) {
+
+    let aus = ``;
+
+
+    for (let i in domande) {
+
+        risposteDate.push("");
+
+        aus += ` <div class="card esRF">
+                        <div class="card-header">
+                            <span>domanda n° ${domande[i].domID}    </span>`;
+
+        aus += `
+                </div>
+                    <div class="card-body">
+                    <p>riformula la prima frase in modo che non si cambi il significato utilizzando la parola data</p> 
+                    <div class="card-text">
+
+                        <p>${domande[i].testo}</p>
+                        <p><strong>${domande[i].elencoRisposte[1]}</strong></p><br>
+                        <input type="text" id="${domande[i].domID}">
+                        
+                    </div>
+                </div>
+            </div>`;
+    
     }
 
     return aus;
 
 }
 
-function showModal() {
-	let modal_crediti = document.getElementsByClassName("modal-body")[0];
-	for (let i = 0; i < crediti.length; i++) {
-		modal_crediti.innerHTML += `<p id="p${i}">${crediti[i]}</p>`;
-	}
-}
+
 
 function correggiES(idUtente) {
     // Definizione dei vettori di stringhe

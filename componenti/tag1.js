@@ -77,11 +77,11 @@ class Tag1 extends HTMLElement {
 
 customElements.define("val-tag1", Tag1);
 
-/* contenitore da cui appendere il componente */
-let contenitore = document.getElementById("contenitore");
+// /* contenitore da cui appendere il componente */
+// let contenitore = document.getElementById("contenitore");
 
-/* CON IL .value SI METTE IL VALORE CHE SI VUOLE VISUALIZZARE */
-let tag1 = document.createElement("val-tag1");
-tag1.value = "CIAO";
+// /* CON IL .value SI METTE IL VALORE CHE SI VUOLE VISUALIZZARE */
+// let tag1 = document.createElement("val-tag1");
+// tag1.value = "CIAO";
 
-contenitore.appendChild(tag1);
+// contenitore.appendChild(tag1);
