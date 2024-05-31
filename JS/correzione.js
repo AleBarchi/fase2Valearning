@@ -6,6 +6,7 @@ function getExercises(){
 
     const correction = document.getElementById('corr');
     correction.appendChild(viewCorrection(esercizio));
+    
 
 
     let options = {
@@ -25,6 +26,7 @@ function getExercises(){
 }
 
 function viewCorrection(ex){
+  console.log(ex);
     let exArea = document.createElement('div')
     let Title = document.createElement('h4')
     let Points = document.createElement('h6')
@@ -40,7 +42,7 @@ function viewCorrection(ex){
         let row = document.createElement('p')
         let bold = document.createElement('span')
         let ans = document.createElement('span')
-        bold.textContent = `Question ${i+1}`
+        bold.textContent = `Question ${parseInt(i)+1}`
         bold.style.fontWeight = 'bolder'
 
         if(ex.risposteCorrette[i] == ex.risposteDate[i]){

@@ -108,6 +108,7 @@ function creaEsVF(domande) {
     let aus = ``;
     for (let i in domande) {
         risposteDate.push("Vero");
+        risposteCorrette.push(domande[i].rispostaCorretta);
 
         aus += ` <div class="card esVF">
                         <div class="card-header">
@@ -119,9 +120,9 @@ function creaEsVF(domande) {
                         <div class="card-text">
                             <p>${domande[i].testo}</p> 
                             <div>
-                                <input type="radio" id="v${i}" name="${domande[i].domID}" value="V" checked onclick="gestisciClick(${i}, 'V')">
+                                <input type="radio" id="v${i}" name="${domande[i].domID}" value="Vero" checked">
                                 <label for="v${i}">V</label>
-                                <input type="radio" id="f${i}" name="${domande[i].domID}" value="F" onclick="gestisciClick(${i}, 'F')">
+                                <input type="radio" id="f${i}" name="${domande[i].domID}" value="Falso">
                                 <label for="f${i}">F</label>
                             </div>
                         </div>
@@ -132,20 +133,6 @@ function creaEsVF(domande) {
     return aus;
 }
 
-function gestisciClick(i, valore) {
-
-    if (valore == 'V') {
-
-        risposteDate[i] = "Vero";
-
-    } else if (valore == 'F') {
-
-        risposteDate[i] = "Falso";
-
-    }
-
-}
-
 function creaEsTB(domande) {
 
     let aus = ``;
@@ -154,6 +141,7 @@ function creaEsTB(domande) {
     for (let i in domande) {
 
         risposteDate.push("");
+        risposteCorrette.push(domande[i].rispostaCorretta);
 
         let testo = domande[i].testo.split(";");
 
@@ -167,7 +155,7 @@ function creaEsTB(domande) {
                     <p>inserisci la parola mancante nel testo</p> 
                     <div class="card-text">
                         <p>${testo[0]}
-                        <input type="text" id="${domande[i].domID}">
+                        <input type="text" class="input-text" id="${domande[i].domID}">
                         ${testo[1]}</p>
                     </div>
                 </div>
@@ -185,6 +173,8 @@ function creaEsRM(domande) {
     for (let i in domande) {
 
         risposteDate.push(domande[i].elencoRisposte[0]);
+        risposteCorrette.push(domande[i].rispostaCorretta);
+
 
         aus += `<div class="card esRM">
                     <div class="card-header">
@@ -194,7 +184,7 @@ function creaEsRM(domande) {
                         <div class="card-text">
                             <p>${domande[i].testo}</p>
                             <div>
-                                <select name="${domande[i].domID}" id="combo${i}">
+                                <select class="card-select" name="${domande[i].domID}" id="combo${i}">
         `;
 
         for (let j in domande[i].elencoRisposte) {
@@ -221,6 +211,8 @@ function creaEsRF(domande) {
     for (let i in domande) {
 
         risposteDate.push("");
+        risposteCorrette.push(domande[i].rispostaCorretta);
+
 
         aus += ` <div class="card esRF">
                         <div class="card-header">
@@ -234,7 +226,7 @@ function creaEsRF(domande) {
 
                         <p>${domande[i].testo}</p>
                         <p><strong>${domande[i].elencoRisposte[1]}</strong></p><br>
-                        <input type="text" id="${domande[i].domID}">
+                        <input type="text" class="input-text" id="${domande[i].domID}">
                         
                     </div>
                 </div>
@@ -249,10 +241,38 @@ function creaEsRF(domande) {
 
 
 function correggiES() {
+    if(esercizio.tipo == "testoBucato" || esercizio.tipo == "refrasing")
+    {
+        let inputs = document.querySelectorAll('.input-text');
+        inputs.forEach((input, index) => {
+            risposteDate[index] = input.value;
+        });
+    }
+    else if(esercizio.tipo == "sceltaMultipla")
+    {
+        const selects = document.querySelectorAll('.card-select');
+        const values = Array.from(selects).map(select => select.value);
+
+        values.forEach((option, index) => {
+            risposteDate[index] = option.value;
+        });
+    }
+    else if(esercizio.tipo == "veroFalso")
+    {
+        const cards = document.querySelectorAll('.card-text');
+        const values = Array.from(cards).map(card => {
+            const selectedRadio = card.querySelector('input[type="radio"]:checked');
+            return selectedRadio ? selectedRadio.value : null;
+        });
+        values.forEach((radio, index) => {
+            risposteDate[index] = radio.value;
+        });
+    }
+
     // calcolo punteggio e aggiorno il JSON mettendo anche questo dentro
     let domande = risposteCorrette.length;
     let contErr = 0;
-    for (let i in domande)
+    for (let i=0; i<domande; i++)
         if (risposteDate[i] != risposteCorrette[i]) contErr++;
 
     esercizio.punti = Math.round(10 * (domande - contErr) / domande);

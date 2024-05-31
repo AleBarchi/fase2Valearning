@@ -116,6 +116,7 @@ body{
 }
 
 main{
+  margin-top: 175px;
   height: 180vh;
   width: 100%;
   overflow-x: hidden;
