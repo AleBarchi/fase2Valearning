@@ -40,7 +40,7 @@ function creaCompComuni() {
     esercizio = {
         "codEs": 1,
         "titolo": "Zio pera questo è il titolo",
-        "tipo": "refrasing",
+        "tipo": "testoBucato",
         "livello": "B1",
         "idUtente": 1,
         "validato": 1,
@@ -49,23 +49,23 @@ function creaCompComuni() {
         "domande": [
             {
                 "domID": 1,
-                "testo": "ciao sono ",
+                "testo": "il past simple è presente?;!",
                 "livelloID": 2,
                 "utenteID": 1,
                 "dataInvio": "2024-05-29",
                 "esID": 1,
-                "elencoRisposte": ["hello i am", "hello"],
-                "rispostaCorretta": "Falso"
+                "elencoRisposte": [""],
+                "rispostaCorretta": "si"
             },
             {
                 "domID": 2,
-                "testo": "jonny e etero",
+                "testo": "jonny e etero?;!",
                 "livelloID": 3,
                 "utenteID": 2,
                 "dataInvio": "2024-05-30",
                 "esID": 1,
-                "elencoRisposte": ["jonny non e fro", "non"],
-                "rispostaCorretta": "Vero"
+                "elencoRisposte": [""],
+                "rispostaCorretta": "no"
             }
         ]
     }
@@ -98,7 +98,7 @@ function creaEs(esercizio) {
         case "testoBucato":
             return creaEsTB(esercizio.domande);
 
-        case "refrasing":
+        case "rephrasing":
             return creaEsRF(esercizio.domande);
     }
 }
@@ -245,27 +245,22 @@ function correggiES() {
     {
         let inputs = document.querySelectorAll('.input-text');
         inputs.forEach((input, index) => {
-            risposteDate[index] = input.value;
+        risposteDate[index] = input.value;
         });
     }
     else if(esercizio.tipo == "sceltaMultipla")
     {
         const selects = document.querySelectorAll('.card-select');
-        const values = Array.from(selects).map(select => select.value);
-
-        values.forEach((option, index) => {
-            risposteDate[index] = option.value;
+        selects.forEach((select, index) => {
+        risposteDate[index] = select.value;
         });
     }
     else if(esercizio.tipo == "veroFalso")
     {
         const cards = document.querySelectorAll('.card-text');
-        const values = Array.from(cards).map(card => {
+        cards.forEach((card, index) => {
             const selectedRadio = card.querySelector('input[type="radio"]:checked');
-            return selectedRadio ? selectedRadio.value : null;
-        });
-        values.forEach((radio, index) => {
-            risposteDate[index] = radio.value;
+            risposteDate[index] = selectedRadio ? selectedRadio.value : null;
         });
     }
 
