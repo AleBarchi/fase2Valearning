@@ -17,20 +17,22 @@ class Footer extends HTMLElement { // classe per il componente custom
             body { position:relative; }
 
             footer {
-                width: 100%;
+                max-width: 100vw;
+                min-width: 90vw;
                 
                 box-shadow: 0 8px 48px 8px rgba(47, 91, 234, 0.175);
                 box-sizing: border-box;
+                background-color: #fff;
 
                 display: flex;
                 justify-content: space-evenly;
                 align-items: center;
                 flex-wrap:wrap;
-
+/*
                 position: absolute;
                 top: 100%;
                 right: 0;
-                
+  */              
 
             }
 

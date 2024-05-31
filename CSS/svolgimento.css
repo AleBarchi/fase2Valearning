@@ -9,10 +9,6 @@
 
 
 body{
-    /*
-        Richiamare una variabile
-        background-color: var(--rosso);
-    */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -22,24 +18,13 @@ body{
     background-color: var(--azzurroBKG);
 }
 
-.navbar-brand{
-    width: 100px;
-    height: 100px;
-    background-image: url("img/logo.png");
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-}
 
 main{
-	position:relative;
-    /*height: 70vh;*/
+    margin-top: 175px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    overflow-y:auto;
-	top:200px;
 }
 
 #accedi{
@@ -87,6 +72,10 @@ header img{
 .esTB .card-text{
     display: flex;
     flex-direction: row;
+}
+
+.card{
+    margin-bottom: 10px;
 }
 
 .esRM, .esTB, .esVF{
