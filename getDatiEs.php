@@ -42,7 +42,9 @@ if ($result->rowCount() > 0) {
     while ($row = $result->fetch_assoc()) {
         $answers = explode(';', $row['elencoRisposte']);
         $row['rispostaCorretta'] = $answers[0];
-        shuffle($row['elencoRisposte']);
+        if ($esercizio[0]['tipo'] !== 'rephrasing') {
+          shuffle($answers);
+        }
         $questions[] = $row;
     }
 }
