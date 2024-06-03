@@ -1,12 +1,3 @@
-/**
- * Ale decidiamo come fare con le risposte, io pensavo che tipo qua nel JS prendi dall'oggetto JSON tutte le risposte 
- * corrette e ti crei un vettore locale con queste, poi così facciamo per la correzzione una comparazione tra un nuovo vettore 
- * fatto dalle risposte date dall'utente e le risposte giuste, quindi tu mi mandi al php nuovo solo più 2 vettori
- * poi io nel php li controllo e assegno i punteggi all'utente
- * 
- * ho scritto tutto questo solo perchè poi me lo dimentico
- */
-
 let risposteDate = [];
 let risposteCorrette = [];
 let esercizio = {};
@@ -39,8 +30,8 @@ window.onload = function () {
 function creaCompComuni() {
     esercizio = {
         "codEs": 1,
-        "titolo": "Zio pera questo è il titolo",
-        "tipo": "testoBucato",
+        "titolo": "Questo è il titolo",
+        "tipo": "veroFalso",
         "livello": "B1",
         "idUtente": 1,
         "validato": 1,
@@ -49,23 +40,23 @@ function creaCompComuni() {
         "domande": [
             {
                 "domID": 1,
-                "testo": "il past simple è presente?;!",
+                "testo": "il past simple è presente?",
                 "livelloID": 2,
                 "utenteID": 1,
                 "dataInvio": "2024-05-29",
                 "esID": 1,
-                "elencoRisposte": [""],
-                "rispostaCorretta": "si"
+                "elencoRisposte": ["Vero", "Falso"],
+                "rispostaCorretta": "Falso"
             },
             {
                 "domID": 2,
-                "testo": "jonny e etero?;!",
+                "testo": "Il future simple ha la forma in -ing?",
                 "livelloID": 3,
                 "utenteID": 2,
                 "dataInvio": "2024-05-30",
                 "esID": 1,
-                "elencoRisposte": [""],
-                "rispostaCorretta": "no"
+                "elencoRisposte": ["Vero", "Falso"],
+                "rispostaCorretta": "Falso"
             }
         ]
     }
